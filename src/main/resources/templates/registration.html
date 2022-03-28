@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registration</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <form class="login-form" th:action="@{/register}" method="POST">
+            <h1>Welcome</h1>
+            <div class="inputs-flex-container">
+                <div th:if="${show}" th:text="${msg}" class="login-error-box"></div>
+                <input type="text" th:name="uname" class="flex-item input-item text-input" placeholder="username" required>
+                <input type="text" th:name="email" class="flex-item input-item text-input" placeholder="email" required>
+                <input type="password" th:name="pwd" class="flex-item input-item pwd-input" placeholder="password" required>
+                <input type="submit" class="flex-item input-item submit-btn" value="submit">
+            </div>
+        </form>
+    </body>
+</html>
