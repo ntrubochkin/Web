@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>News / shrimp</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="home-flex-container">
+            <div class="left-flex-container home-flex-item">
+                <div th:if="${loggedIn}" class="forms-container">
+                    <div class="logo-box">
+                        <img class="menu-icon logo" src="icons/shrimp-solid.svg">
+                    </div>
+                    <form class="menu-form" th:action="@{/home}" method="GET">
+                        <button type="submit" class="menu-btn">
+                            <img class="menu-icon" src="icons/house-solid.svg">
+                            <span class="menu-text selected-span">Home</span>
+                        </button>
+                    </form>
+                    <form class="menu-form" action="" method="">
+                        <button type="submit" class="menu-btn">
+                            <img class="menu-icon" src="icons/circle-user-solid.svg">
+                            <span class="menu-text">Profile</span>
+                        </button>
+                    </form>
+                    <form class="menu-form" th:action="@{/logout}" method="GET">
+                        <button type="submit" id="exit-btn" class="menu-btn">
+                            <img class="menu-icon" src="icons/right-from-bracket-solid.svg">
+                            <span class="menu-text">Exit</span>
+                        </button>
+                    </form>
+                </div>
+                <div th:if="${loggedIn}" class="profile-info">
+                    <div class="pf-grid">
+                        <div class="pf-image-box">
+                            <img class="pf-image" th:src="@{/image/avatar/} + ${profileAvatar}"/>
+                        </div>
+                        <span th:text="${clientName}" class="nickname-span">User nickname</span>
+                        <span th:text="${profileInfo}" class="pf-info-span">User info</span>
+                    </div>
+                </div>
+            </div>
+            <div class="news-flex-container home-flex-item">
+                <div class="news-header">
+                    <span class="latest-news-span">Latest news</span>
+                </div>
+                <div class="feed-container">
+                    <div th:if="${loggedIn}" class="post-box">
+                        <textarea form="upload-form" id="input-area" th:name="uTextInput" placeholder="What's new?"></textarea>
+                        <hr>
+                        <div class="post-buttons-area">
+                            <button class="image-upload-btn">
+                                <img class="upload-icon" src="icons/file-arrow-up-solid.svg">
+                            </button>
+                            <form th:action="@{/upload}" id="upload-form" method="POST" enctype="multipart/form-data">
+                                <input type="file" th:name="uImgInput" id="file-input" accept="image/*" hidden>
+                                <button type="submit" class="send-post-btn">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- post -->
+                    <div th:each="note: ${notes}" class="feed-post">
+                        <div class="post-pf-container">
+                            <div class="pf-image-box">
+                                <img class="pf-image" th:src="@{/image/avatar/} + ${note.avatarImg}"/>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-info">
+                                <span th:text="${note.name}" class="nickname-span">User name</span>
+                                <span class="dot-span">&#8729</span>
+                                <span th:text="${note.uploadTime}" class="publication-time-span">Upload time</span>
+                            </div>
+                            <div th:if="${note.text != null}" th:text="${note.text}" class="post-text-content"></div>
+                            <div th:if="${note.memeImg} != null" class="post-image-box">
+                                <img class="post-img" th:src="@{/image/meme/} + ${note.memeImg}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- post -->
+                </div>
+            </div>
+            <div class="right-side-stuff home-flex-item">
+                <div class="search-box">
+                    <img class="menu-icon" src="icons/magnifying-glass-solid.svg">
+                    <div class="vertical-line"></div>
+                    <input class="search-input" type="text" placeholder="search in shrimp.com" required>
+                </div>
+            </div>
+        </div>
+        <script src="js/imageHandler.js"></script>
+    </body>
+</html>

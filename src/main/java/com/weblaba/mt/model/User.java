@@ -9,30 +9,27 @@ public class User {
     @Id
     @Column(name = "id")
     private long id;
-
     @Basic
     @Column(name = "email")
     private String email;
-
     @Basic
     @Column(name = "image_url")
     private String imageUrl;
-
     @Basic
     @Column(name = "uname")
     private String uname;
-
     @Basic
     @Column(name = "created")
     private Timestamp created;
-
     @Basic
     @Column(name = "pf_info")
     private String pfInfo;
-
     @Basic
     @Column(name = "password")
     private String password;
+    @Basic
+    @Column(name = "pf_img_name")
+    private Long pfImgName;
 
     public long getId() {
         return id;
@@ -90,13 +87,21 @@ public class User {
         this.password = password;
     }
 
+    public Long getPfImgName() {
+        return pfImgName;
+    }
+
+    public void setPfImgName(Long pfImgName) {
+        this.pfImgName = pfImgName;
+    }
+
     public User() { }
 
     public User(String email, String uname, String password) {
         this.email = email;
         this.uname = uname;
         this.password = password;
-        created = new Timestamp(System.currentTimeMillis());
+        this.created = new Timestamp(System.currentTimeMillis());
     }
 
     @Override
@@ -113,6 +118,7 @@ public class User {
         if (created != null ? !created.equals(user.created) : user.created != null) return false;
         if (pfInfo != null ? !pfInfo.equals(user.pfInfo) : user.pfInfo != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (pfImgName != null ? !pfImgName.equals(user.pfImgName) : user.pfImgName != null) return false;
 
         return true;
     }
@@ -126,6 +132,7 @@ public class User {
         result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (pfInfo != null ? pfInfo.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (pfImgName != null ? pfImgName.hashCode() : 0);
         return result;
     }
 }

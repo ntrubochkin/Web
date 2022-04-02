@@ -10,9 +10,15 @@ public interface IUserRepo extends JpaRepository<User, Long> {
     Optional<User> findUserByEmail(String email);
     Optional<User> findUserByUname(String name);
 
-    @Query("SELECT u.password FROM User u WHERE u.email = ?1")
-    String findPasswordByEmail(String email);
+    @Query("SELECT u.id FROM User u WHERE u.email = ?1")
+    Long findIdByEmail(String email);
 
     @Query("SELECT u.id FROM User u WHERE u.uname = ?1")
-    long findIdByUname(String name);
+    Long findIdByUname(String nickname);
+
+    @Query("SELECT u.uname FROM User u WHERE u.id = ?1")
+    String findUnameById(Long id);
+
+    @Query("SELECT u.pfImgName FROM User u WHERE u.id = ?1")
+    Long findPfImgNameById(Long id);
 }

@@ -4,36 +4,53 @@ import com.weblaba.mt.exception.UserNotFoundException;
 import com.weblaba.mt.model.User;
 import com.weblaba.mt.repository.IUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+    private final PasswordEncoder pwdEncoder;
     private final IUserRepo repo;
 
     @Autowired
-    public UserService(IUserRepo repo) {
+    public UserService(IUserRepo repo, PasswordEncoder pwdEncoder) {
         this.repo = repo;
+        this.pwdEncoder = pwdEncoder;
     }
 
-    public User findByEmail(String email) {
+    public User findUserByEmail(String email) {
         return repo.findUserByEmail(email)
                 .orElseThrow(()-> new UserNotFoundException("User with email address " + email + " not found."));
     }
 
-    public User findByName(String name) {
+    public User findUserByName(String name) {
         return repo.findUserByUname(name)
-                .orElseThrow(()-> new UserNotFoundException(("User with nickname " + name + " not found.")));
+                .orElseThrow(()-> new UserNotFoundException(("User with nickname \"" + name + "\" not found.")));
     }
 
-    public String findPasswordByEmail(String email) {
-        return repo.findPasswordByEmail(email);
+    public Long findIdByEmail(String email) {
+        return repo.findIdByEmail(email);
     }
 
-    public Long findIdByNickname(String name) {
-        return repo.findIdByUname(name);
+    public Long findIdByNickname(String uName) {
+        return repo.findIdByUname(uName);
     }
 
-    public User addUser(User user) {
-        return repo.save(user);
+    public String findNameById(Long id) {
+        return repo.findUnameById(id);
+    }
+
+    public Long findProfileImageById(Long id) {
+        Long name = repo.findPfImgNameById(id);
+        return (name == null) ? 0L : name;
+    }
+
+    public void addNewUser(String email, String uname, String password) {
+        User u = new User(email, uname, pwdEncoder.encode(password));
+        repo.save(u);
+    }
+
+    public boolean passwordMatches(String rawPwd, String userPwd) {
+        return pwdEncoder.matches(rawPwd, userPwd);
     }
 }
