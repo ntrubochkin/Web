@@ -88,10 +88,30 @@
                 <div class="search-box">
                     <img class="menu-icon" src="icons/magnifying-glass-solid.svg">
                     <div class="vertical-line"></div>
-                    <input class="search-input" type="text" placeholder="search in shrimp.com" required>
+                    <input class="search-input" type="search" placeholder="search in shrimp.com" data-search required>
+                </div>
+                <div class="user-cards-wrapper" data-cards-container>
+                    <!-- card -->
+                    <template data-user-card-template>
+                        <form action="" method="GET" data-card-form>
+                            <button type="submit" class="card">
+                                <div class="card-head">
+                                    <div class="pf-image-box">
+                                        <img class="pf-image" data-card-photo/>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <span data-card-username>Username</span>
+                                    <span data-card-date>Creation date</span>
+                                </div>
+                            </button>
+                        </form>
+                    </template>
+                    <!-- card -->
                 </div>
             </div>
         </div>
         <script src="js/imageHandler.js"></script>
+        <script src="js/search.js"></script>
     </body>
 </html>

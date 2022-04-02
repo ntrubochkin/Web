@@ -155,7 +155,8 @@ textarea::placeholder {
 .image-upload-btn:hover,
 .send-post-btn:hover,
 .feed-post:hover,
-.search-box:hover {
+.search-box:hover,
+.card:hover {
     background-color: var(--hover-pink);
 }
 
@@ -249,13 +250,18 @@ textarea::placeholder {
 .feed-container {
     width: 100%;
     height: 100%;
+}
+
+.feed-container,
+.user-cards-wrapper {
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE, Edge */
 }
 
-.feed-container::-webkit-scrollbar {
+.feed-container::-webkit-scrollbar,
+.user-cards-wrapper::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
 }
 
@@ -354,16 +360,23 @@ hr {
 
 /* left side */
 
-/* .left-side-stuff { } */
+.right-side-stuff {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-box,
+.user-cards-wrapper {
+    background-color: var(--hover);
+    position: relative;
+    width: 60%;
+    margin-top: 3px;
+    left: 5%;
+}
 
 .search-box {
-    margin-top: 3px;
-    background-color: var(--hover);
     border-radius: 30px;
-    width: 60%;
     height: 50px;
-    position: relative;
-    left: 5%;
     padding-left: 15px;
     display: flex;
     column-gap: 8px;
@@ -383,6 +396,36 @@ hr {
     width: 80%;
 }
 
+.user-cards-wrapper,
+.card {
+    border-radius: 30px;
+    display: flex;
+    padding: 5px;
+}
+
+.user-cards-wrapper {
+    flex-direction: column;
+    height: 295px;
+}
+
+.card {
+    cursor: pointer;
+    background: none;
+    border: none;
+    flex-direction: row;
+    column-gap: 5px;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    text-align: left;
+}
+
 @media only screen and (max-width: 1500px) {
     .left-flex-container,
     .right-side-stuff {
@@ -393,7 +436,8 @@ hr {
         flex: 3.25;
     }
 
-    .search-box {
+    .search-box,
+    .user-cards-wrapper {
         width: 80%;
     }
 }
