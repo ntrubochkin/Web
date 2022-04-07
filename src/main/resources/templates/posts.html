@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>News / shrimp</title>
-        <link rel="stylesheet" href="styles/style.css">
+        <title>Hello, shrimp</title>
+        <link rel="stylesheet" href="/styles/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet">
     </head>
     <body>
@@ -13,53 +13,75 @@
             <div class="left-flex-container home-flex-item">
                 <div th:if="${loggedIn}" class="forms-container">
                     <div class="logo-box">
-                        <img class="menu-icon logo" src="icons/shrimp-solid.svg">
+                        <img class="menu-icon logo" src="/icons/shrimp-solid.svg">
                     </div>
                     <form class="menu-form" th:action="@{/home}" method="GET">
                         <button type="submit" class="menu-btn">
-                            <img class="menu-icon" src="icons/house-solid.svg">
-                            <span class="menu-text selected-span">Home</span>
+                            <img class="menu-icon" src="/icons/house-solid.svg">
+                            <span class="menu-text">Home</span>
                         </button>
                     </form>
                     <form class="menu-form" th:action="@{/shrimp/} + ${stateId}" method="GET">
                         <button type="submit" class="menu-btn">
-                            <img class="menu-icon" src="icons/circle-user-solid.svg">
-                            <span class="menu-text">Profile</span>
+                            <img class="menu-icon" src="/icons/circle-user-solid.svg">
+                            <span class="menu-text selected-span">Profile</span>
                         </button>
                     </form>
                     <form class="menu-form" th:action="@{/logout}" method="GET">
-                        <button type="submit" id="exit-btn" class="menu-btn">
-                            <img class="menu-icon" src="icons/right-from-bracket-solid.svg">
+                        <button type="submit" class="menu-btn">
+                            <img class="menu-icon" src="/icons/right-from-bracket-solid.svg">
                             <span class="menu-text">Exit</span>
                         </button>
                     </form>
                 </div>
-                <div th:if="${loggedIn}" class="profile-info">
-                    <div class="pf-grid">
-                        <div class="pf-image-box">
-                            <img class="pf-image" th:src="@{/image/avatar/} + ${stateAvatar}"/>
-                        </div>
-                        <span th:text="${stateName}" class="nickname-span">User nickname</span>
-                        <span th:text="${stateInfo}" class="pf-info-span">User info</span>
-                    </div>
-                </div>
             </div>
             <div class="news-flex-container home-flex-item">
-                <div class="news-header">
-                    <span class="latest-news-span">Latest news</span>
+                <div class="profile-header">
+                    <span th:text="${stateName}" class="pf-name-span">Nickname</span>
+                    <span class="pf-posts-count-span">[[${statePostsCount}]]</span>
                 </div>
                 <div class="feed-container">
-                    <div th:if="${loggedIn}" class="post-box">
-                        <textarea form="upload-form" id="input-area" th:name="uTextInput" placeholder="What's new?"></textarea>
-                        <hr>
-                        <span class="symbols-count-span">0/0</span>
-                        <div class="post-buttons-area">
-                            <button class="image-upload-btn">
-                                <img class="upload-icon" src="icons/file-arrow-up-solid.svg">
-                            </button>
-                            <form th:action="@{/upload/0/0}" id="upload-form" method="POST" enctype="multipart/form-data">
+                    <div class="pf-body">
+                        <div class="pf-top-content">
+                            <div class="pf-main-image-box">
+                                <img class="pf-main-img" th:src="@{/image/avatar/} + ${stateAvatar}"/>
+                            </div>
+                            <div class="pf-btns">
+                                <button th:if="${stateShowCHIB}" class="send-post-btn change-info-btn">Change info</button>
+                                <form th:if="${stateShowFB}" th:action="@{/shrimp/follow/1}" method="POST">
+                                    <button th:text="${stateFollowBtnName}" class="send-post-btn follow-btn">Follow/Unfollow</button>
+                                </form>
+                            </div>
+                        </div>
+                        <span th:text="${stateInfo}" class="info-span"></span>
+                        <span class="registration-date-span">Registration: [[${stateRegisterDate}]]</span>
+                        <div class="relations-info">
+                            <div class="relation">
+                                <span th:text="${stateFollowed}">0</span>
+                                <span class="relation-name-span"> followed</span>
+                            </div>
+                            <div class="relation">
+                                <span th:text="${stateFollows}">0</span>
+                                <span class="relation-name-span"> follows</span>
+                            </div>
+                        </div>
+                        <form th:action="@{/upload/1/1}" method="POST" class="change-info-form" enctype="multipart/form-data" hidden>
+                            <span class="symbols-count-span delete-top">0/0</span>
+                            <textarea th:name="uTextInput" id="input-area" placeholder="New info"></textarea>
+                            <div class="change-info-btns">
+                                <input type="submit" value="Send" class="send-post-btn send-info-btn">
                                 <input type="file" th:name="uImgInput" id="file-input" accept="image/*" hidden>
-                                <button type="submit" class="send-post-btn">Send</button>
+                                <button type="button" class="image-upload-btn">
+                                    <img class="upload-icon" src="/icons/file-arrow-up-solid.svg">
+                                </button>
+                            </div>
+                        </form>
+                        <div class="pf-page-selection">
+                            <form th:action="@{/shrimp/} + ${stateId}" method="GET" class="pf-flex-form">
+                                <button type="submit" class="page-selection-btn selected-page">Posts</button>
+                            </form>
+                            <form th:action="@{/shrimp/} + ${stateId} + @{/follows}" method="GET" class="pf-flex-form">
+                                <button type="submit" class="page-selection-btn">Follows</button>
                             </form>
                         </div>
                     </div>
@@ -89,14 +111,14 @@
             </div>
             <div class="right-side-stuff home-flex-item">
                 <div class="search-box">
-                    <img class="menu-icon" src="icons/magnifying-glass-solid.svg">
+                    <img class="menu-icon" src="/icons/magnifying-glass-solid.svg">
                     <div class="vertical-line"></div>
                     <input class="search-input" type="search" placeholder="search in shrimp.com" data-search required>
                 </div>
                 <div class="user-cards-wrapper" data-cards-container>
                     <!-- card -->
                     <template data-user-card-template>
-                        <form action="" method="GET" data-card-form>
+                        <form action="" data-user-form>
                             <button type="submit" class="card">
                                 <div class="card-head">
                                     <div class="pf-image-box">
@@ -114,8 +136,9 @@
                 </div>
             </div>
         </div>
-        <script src="js/imageHandler.js"></script>
-        <script src="js/search.js"></script>
-        <script src="js/userInput.js"></script>
+        <script src="/js/imageHandler.js"></script>
+        <script src="/js/search.js"></script>
+        <script src="/js/userInput.js"></script>
+        <script src="/js/info.js"></script>
     </body>
 </html>

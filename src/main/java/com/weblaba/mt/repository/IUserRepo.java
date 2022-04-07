@@ -4,6 +4,7 @@ import com.weblaba.mt.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,4 +26,10 @@ public interface IUserRepo extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.uname LIKE %:part%")
     List<User> findByNameContaining(String part);
+
+    @Query("SELECT u.pfInfo FROM User u WHERE u.id = ?1")
+    String findProfileInfoById(Long id);
+
+    @Query("SELECT u.created FROM User u WHERE u.id = ?1")
+    Timestamp findCreationDateById(Long id);
 }

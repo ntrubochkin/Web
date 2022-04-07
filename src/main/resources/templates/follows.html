@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Follows</title>
+        <link rel="stylesheet" href="/styles/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="home-flex-container">
+            <div class="left-flex-container home-flex-item">
+                <div th:if="${loggedIn}" class="forms-container">
+                    <div class="logo-box">
+                        <img class="menu-icon logo" src="/icons/shrimp-solid.svg">
+                    </div>
+                    <form class="menu-form" th:action="@{/home}" method="GET">
+                        <button type="submit" class="menu-btn">
+                            <img class="menu-icon" src="/icons/house-solid.svg">
+                            <span class="menu-text">Home</span>
+                        </button>
+                    </form>
+                    <form class="menu-form" th:action="@{/shrimp/} + ${stateId}" method="GET">
+                        <button type="submit" class="menu-btn">
+                            <img class="menu-icon" src="/icons/circle-user-solid.svg">
+                            <span class="menu-text selected-span">Profile</span>
+                        </button>
+                    </form>
+                    <form class="menu-form" th:action="@{/logout}" method="GET">
+                        <button type="submit" class="menu-btn">
+                            <img class="menu-icon" src="/icons/right-from-bracket-solid.svg">
+                            <span class="menu-text">Exit</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="news-flex-container home-flex-item">
+                <div class="profile-header">
+                    <span th:text="${stateName}" class="pf-name-span">Nickname</span>
+                    <span class="pf-posts-count-span">[[${statePostsCount}]]</span>
+                </div>
+                <div class="feed-container">
+                    <div class="pf-body">
+                        <div class="pf-top-content">
+                            <div class="pf-main-image-box">
+                                <img class="pf-main-img" th:src="@{/image/avatar/} + ${stateAvatar}"/>
+                            </div>
+                            <div class="pf-btns">
+                                <button th:if="${stateShowCHIB}" class="send-post-btn change-info-btn">Change info</button>
+                                <form th:if="${stateShowFB}" th:action="@{/shrimp/follow/2}" method="POST">
+                                    <button th:text="${stateFollowBtnName}" class="send-post-btn follow-btn">Follow/Unfollow</button>
+                                </form>
+                            </div>
+                        </div>
+                        <span th:text="${stateInfo}" class="info-span"></span>
+                        <span class="registration-date-span">Registration: [[${stateRegisterDate}]]</span>
+                        <div class="relations-info">
+                            <div class="relation">
+                                <span th:text="${stateFollowed}">0</span>
+                                <span class="relation-name-span"> followed</span>
+                            </div>
+                            <div class="relation">
+                                <span th:text="${stateFollows}">0</span>
+                                <span class="relation-name-span"> follows</span>
+                            </div>
+                        </div>
+                        <form th:action="@{/upload/1/2}" method="POST" class="change-info-form" enctype="multipart/form-data" hidden>
+                            <textarea th:name="uTextInput" id="input-area" placeholder="New info"></textarea>
+                            <div class="change-info-btns">
+                                <input type="submit" value="Send" class="send-post-btn send-info-btn">
+                                <input type="file" th:name="uImgInput" id="file-input" accept="image/*" hidden>
+                                <button type="button" class="image-upload-btn">
+                                    <img class="upload-icon" src="/icons/file-arrow-up-solid.svg">
+                                </button>
+                            </div>
+                        </form>
+                        <div class="pf-page-selection">
+                            <form th:action="@{/shrimp/} + ${stateId}" method="GET" class="pf-flex-form">
+                                <button type="submit" class="page-selection-btn">Posts</button>
+                            </form>
+                            <form th:action="@{/shrimp/} + ${stateId} + @{/follows}" method="GET" class="pf-flex-form">
+                                <button type="submit" class="page-selection-btn selected-page">Follows</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- follow card -->
+                    <form th:each="card: ${cards}" th:action="@{/shrimp/} + ${card.userId}" method="GET">
+                        <button type="submit" class="card">
+                            <div class="card-head">
+                                <div class="pf-image-box">
+                                    <img class="pf-image" th:src="@{/image/avatar/} + ${card.avatarImg}" data-card-photo/>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <span th:text="${card.userName}">Username</span>
+                            </div>
+                        </button>
+                    </form>
+                    <!-- follow card -->
+                </div>
+            </div>
+            <div class="right-side-stuff home-flex-item">
+                <div class="search-box">
+                    <img class="menu-icon" src="/icons/magnifying-glass-solid.svg">
+                    <div class="vertical-line"></div>
+                    <input class="search-input" type="search" placeholder="search in shrimp.com" data-search required>
+                </div>
+                <div class="user-cards-wrapper" data-cards-container>
+                    <!-- card -->
+                    <template data-user-card-template>
+                        <form action="" data-user-form>
+                            <button type="submit" class="card">
+                                <div class="card-head">
+                                    <div class="pf-image-box">
+                                        <img class="pf-image" data-card-photo/>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <span data-card-username>Username</span>
+                                    <span data-card-date>Creation date</span>
+                                </div>
+                            </button>
+                        </form>
+                    </template>
+                    <!-- card -->
+                </div>
+            </div>
+        </div>
+        <script src="/js/imageHandler.js"></script>
+        <script src="/js/search.js"></script>
+        <script src="/js/info.js"></script>
+    </body>
+</html>

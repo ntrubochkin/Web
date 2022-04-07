@@ -13,9 +13,11 @@ public class Follow {
     @Id
     @Column(name = "id_row")
     private long idRow;
+
     @Basic
     @Column(name = "user_id")
     private long userId;
+
     @Basic
     @Column(name = "following_id")
     private Long followingId;
@@ -41,6 +43,13 @@ public class Follow {
     }
 
     public void setFollowingId(Long followingId) {
+        this.followingId = followingId;
+    }
+
+    public Follow() { }
+
+    public Follow(long userId, Long followingId) {
+        this.userId = userId;
         this.followingId = followingId;
     }
 

@@ -12,4 +12,7 @@ public interface INoteRepo extends JpaRepository<Note, Long> {
 
     @Query("SELECT n FROM Note n WHERE n.creationDate BETWEEN ?1 AND ?2")
     List<Note> findAllBetweenDates(Timestamp start, Timestamp end);
+
+    @Query("SELECT COUNT(n) FROM Note n WHERE n.userId = ?1")
+    int findPostsCount(Long id);
 }

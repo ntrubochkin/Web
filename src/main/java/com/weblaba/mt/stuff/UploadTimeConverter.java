@@ -2,6 +2,7 @@ package com.weblaba.mt.stuff;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public final class UploadTimeConverter {
     public static final long ONE_SEC_MS = 1000L;
@@ -31,7 +32,7 @@ public final class UploadTimeConverter {
             lDiff = diff / ONE_DAY_MS;
             date += lDiff + " day";
         } else {
-            date = new SimpleDateFormat("d MMMM yyyy").format(time);
+            date = formatTimestamp(time);
             return date;
         }
 
@@ -40,5 +41,9 @@ public final class UploadTimeConverter {
         }
 
         return date + " ago";
+    }
+
+    public static String formatTimestamp(Timestamp ts) {
+        return new SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH).format(ts);
     }
 }

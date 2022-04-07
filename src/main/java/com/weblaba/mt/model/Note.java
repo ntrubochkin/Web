@@ -14,15 +14,19 @@ public class Note {
     @Id
     @Column(name = "id_note")
     private long idNote;
+
     @Basic
     @Column(name = "user_id")
     private long userId;
+
     @Basic
     @Column(name = "creation_date")
     private Timestamp creationDate;
+
     @Basic
     @Column(name = "text")
     private String text;
+
     @Basic
     @Column(name = "img_name")
     private Long imgName;
@@ -100,5 +104,16 @@ public class Note {
         result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + (imgName != null ? imgName.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "idNote=" + idNote +
+                ", userId=" + userId +
+                ", creationDate=" + creationDate +
+                ", text='" + text + '\'' +
+                ", imgName=" + imgName +
+                '}';
     }
 }

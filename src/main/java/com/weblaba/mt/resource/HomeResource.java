@@ -1,15 +1,13 @@
 package com.weblaba.mt.resource;
 
-import com.weblaba.mt.model.Note;
 import com.weblaba.mt.service.FollowService;
 import com.weblaba.mt.service.NoteService;
 import com.weblaba.mt.service.UserService;
 import com.weblaba.mt.stuff.ClientState;
-import com.weblaba.mt.stuff.ImageServer;
+import com.weblaba.mt.stuff.PagesAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeResource {
@@ -26,45 +24,23 @@ public class HomeResource {
         state = ClientState.getInstance();
     }
 
-    public String redirectToHome() {
-        return "redirect:home";
+    public static String redirectToHome() {
+        return "redirect:/home";
     }
 
     @GetMapping("/home")
     public String sendToHome(Model md) {
         boolean loggedIn = state.loggedIn();
 
-        md.addAttribute("loggedIn", loggedIn);
+        md.addAttribute(PagesAttributes.LOGGED_IN_ATTR, loggedIn);
 
         if(loggedIn) {
-            md.addAttribute("clientName", state.getNickname());
-            md.addAttribute("profileInfo", state.getProfileInfo());
-            md.addAttribute("profileAvatar", state.getProfileImageName());
+            state.fillStaticClientInfo(md);
         }
 
         state.updateContentState(userService, followService, noteService);
-        md.addAttribute("notes", state.getContent());
+        md.addAttribute(PagesAttributes.CONTENT_ATTR, state.getContent());
 
         return "home";
-    }
-
-    @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public String uploadNote(
-            @RequestParam(value = "uImgInput", required = false) MultipartFile file,
-            @RequestParam(value = "uTextInput", required = false) String message) {
-        boolean fileIsEmpty = file.isEmpty();
-        boolean msgIsEmpty = "".equals(message);
-
-        if(fileIsEmpty && msgIsEmpty) {
-            return redirectToHome();
-        }
-
-        Long fileName = fileIsEmpty ? null : ImageServer.getInstance().saveMeme(file);
-        String outMsg = msgIsEmpty ? null : message;
-
-        Note note = new Note(state.getId(), outMsg, fileName);
-        noteService.addNote(note);
-
-        return redirectToHome();
     }
 }

@@ -93,19 +93,42 @@ public class ImageServer {
         }
     }
 
-    public Long saveMeme(MultipartFile file) {
-        lastMeme++;
+    private Long saveImagePrivate(MultipartFile file, String path, Long value) {
+        value++;
         String imgFormat = file.getOriginalFilename().split("\\.")[1];
-        String fileName = String.join(".", lastMeme.toString(), imgFormat);
-        Path outPath = Paths.get(MEMES_PATH, fileName);
+        String fileName = String.join(".", value.toString(), imgFormat);
+        Path outPath = Paths.get(path, fileName);
 
         try {
             Files.copy(file.getInputStream(), outPath);
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            return null;
+            return -1L;
         }
 
-        return lastMeme;
+        return value;
+    }
+
+    public Long saveMeme(MultipartFile file) {
+        long res = saveImagePrivate(file, MEMES_PATH, lastMeme);
+
+        if(res == -1L) {
+            return -1L;
+        }
+
+        lastMeme++;
+        return res;
+
+    }
+
+    public Long saveAvatar(MultipartFile file) {
+        long res = saveImagePrivate(file, AVATARS_PATH, lastAvatar);
+
+        if(res == -1L) {
+            return -1L;
+        }
+
+        lastAvatar++;
+        return res;
     }
 }

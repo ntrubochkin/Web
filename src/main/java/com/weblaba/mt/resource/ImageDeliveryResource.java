@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class ImagesResource {
+public class ImageDeliveryResource {
     private ImageServer imgServer;
 
-    public ImagesResource() {
+    public ImageDeliveryResource() {
         imgServer = ImageServer.getInstance();
     }
 

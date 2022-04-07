@@ -11,6 +11,8 @@ import java.util.List;
 
 @Service
 public class NoteService {
+    public static final String NO_POSTS = "This user hasn't posted anything yet.";
+
     private INoteRepo repo;
 
     @Autowired
@@ -19,8 +21,7 @@ public class NoteService {
     }
 
     public List<Note> getAllNotesById(Long id) {
-        List<Note> list = repo.findAllByUserId(id);
-        return list;
+        return repo.findAllByUserId(id);
     }
 
     public List<Note> getAllNotesWithinAWeek() {
@@ -31,5 +32,15 @@ public class NoteService {
 
     public void addNote(Note n) {
         repo.save(n);
+    }
+
+    public String findPostsCountById(Long id) {
+        return getPostsString(repo.findPostsCount(id));
+    }
+
+    public static String getPostsString(int count) {
+        return (count > 0) ?
+                String.format("%d post", count) + ((count > 1) ? "s" : "") :
+                NoteService.NO_POSTS;
     }
 }

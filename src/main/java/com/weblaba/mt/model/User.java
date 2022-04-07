@@ -14,24 +14,27 @@ public class User {
     @Id
     @Column(name = "id")
     private long id;
+
     @Basic
     @Column(name = "email")
     private String email;
-    @Basic
-    @Column(name = "image_url")
-    private String imageUrl;
+
     @Basic
     @Column(name = "uname")
     private String uname;
+
     @Basic
     @Column(name = "created")
     private Timestamp created;
+
     @Basic
     @Column(name = "pf_info")
     private String pfInfo;
+
     @Basic
     @Column(name = "password")
     private String password;
+
     @Basic
     @Column(name = "pf_img_name")
     private Long pfImgName;
@@ -50,14 +53,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public String getUname() {
@@ -118,7 +113,6 @@ public class User {
 
         if (id != user.id) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (imageUrl != null ? !imageUrl.equals(user.imageUrl) : user.imageUrl != null) return false;
         if (uname != null ? !uname.equals(user.uname) : user.uname != null) return false;
         if (created != null ? !created.equals(user.created) : user.created != null) return false;
         if (pfInfo != null ? !pfInfo.equals(user.pfInfo) : user.pfInfo != null) return false;
@@ -132,12 +126,24 @@ public class User {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
         result = 31 * result + (uname != null ? uname.hashCode() : 0);
         result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (pfInfo != null ? pfInfo.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (pfImgName != null ? pfImgName.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", uname='" + uname + '\'' +
+                ", created=" + created +
+                ", pfInfo='" + pfInfo + '\'' +
+                ", password='" + password + '\'' +
+                ", pfImgName=" + pfImgName +
+                '}';
     }
 }

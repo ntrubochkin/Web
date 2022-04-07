@@ -80,7 +80,8 @@ textarea::placeholder {
     padding: 0;
 }
 
-.link:hover {
+.link:hover,
+.nickname-span:hover {
     color: var(--font-secondary);
 }
 
@@ -120,6 +121,7 @@ textarea::placeholder {
 
 .selected-span {
     /* TODO: Glow effect */
+    text-shadow: 0px 0px 5px;
 }
 
 .menu-btn {
@@ -156,7 +158,8 @@ textarea::placeholder {
 .send-post-btn:hover,
 .feed-post:hover,
 .search-box:hover,
-.card:hover {
+.card:hover,
+.page-selection-btn:hover {
     background-color: var(--hover-pink);
 }
 
@@ -208,6 +211,10 @@ textarea::placeholder {
     border-radius: 50%;
 }
 
+.user-pf-link {
+    text-decoration: none;
+}
+
 .nickname-span {
     grid-area: ns;
 }
@@ -233,11 +240,119 @@ textarea::placeholder {
     border-bottom: none;
 }
 
-/* .news-header { } */
-
-.news-header {
+.news-header,
+.profile-header {
     background-color: var(--bg-color);
     min-height: 50px;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.pf-name-span,
+.pf-posts-count-span {
+    margin-left: 40px;
+}
+
+.pf-name-span {
+    font-size: 1.5em;
+}
+
+.pf-top-content {
+    display: flex;
+    align-items: center;
+}
+
+.pf-btns {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+}
+
+.follow-btn,
+.change-info-btn {
+    width: 100%;
+}
+
+.change-info-btns {
+    display: flex;
+}
+
+.pf-main-image-box {
+    width:  150px;
+    height: 150px;
+}
+
+.pf-main-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.pf-posts-count-span,
+.relation-name-span,
+.registration-date-span {
+    color: var(--font-secondary);
+}
+
+.pf-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    padding: 10px 10px 10px 20px;
+}
+
+.info-span {
+    inline-size: 100%;
+    text-align: justify;
+}
+
+.change-info-btn {
+    margin-left: auto;
+}
+
+.relations-info {
+    display: flex;
+    column-gap: 20px;
+}
+
+.relation:hover {
+    border-bottom: 1px solid white;
+}
+
+.change-info-form {
+    border: 1px solid var(--my-pink);
+    background-color: var(--hover);
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.send-info-btn {
+    width: 100%;
+}
+
+.pf-page-selection {
+    display: flex;
+}
+
+.pf-flex-form {
+    flex: 1;
+}
+
+.page-selection-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+}
+
+.selected-page {
+    border-bottom: 5px solid var(--my-pink);
 }
 
 .latest-news-span {
@@ -294,6 +409,19 @@ hr {
     margin-left: auto;
 }
 
+.symbols-count-span {
+    pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    top: 30px;
+}
+
+.delete-top {
+    top: 0;
+    left: 8px;
+}
+
 .upload-icon {
     width:  20px;
     height: 20px;
@@ -344,7 +472,9 @@ hr {
 }
 
 .post-text-content {
-    width: 90%;
+    inline-size: auto;
+    word-wrap: break-word;
+    width: 500px;
     text-align: justify;
 }
 
@@ -354,7 +484,8 @@ hr {
 }
 
 .feed-post,
-.post-box {
+.post-box,
+.pf-body {
     border-bottom: 1px solid var(--my-pink);
 }
 

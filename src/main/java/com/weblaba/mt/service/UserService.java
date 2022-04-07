@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
 public class UserService {
+    public static final String NO_INFO = "No information.";
+
     private final PasswordEncoder pwdEncoder;
     private final IUserRepo repo;
 
@@ -44,6 +47,10 @@ public class UserService {
 
     public Long findProfileImageById(Long id) {
         Long name = repo.findPfImgNameById(id);
+        return getProfileImage(name);
+    }
+
+    public static Long getProfileImage(Long name) {
         return (name == null) ? 0L : name;
     }
 
@@ -52,11 +59,24 @@ public class UserService {
         repo.save(u);
     }
 
+    public void updateUser(User user) {
+        repo.save(user);
+    }
+
     public boolean passwordMatches(String rawPwd, String userPwd) {
         return pwdEncoder.matches(rawPwd, userPwd);
     }
 
     public List<User> searchByPart(String part) {
         return repo.findByNameContaining(part);
+    }
+
+    public String findInfoById(Long id) {
+        String info = repo.findProfileInfoById(id);
+        return (info == null) ? NO_INFO : info;
+    }
+
+    public Timestamp findRegistrationDate(Long id) {
+        return repo.findCreationDateById(id);
     }
 }

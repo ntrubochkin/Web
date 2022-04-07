@@ -1,9 +1,12 @@
 const search = document.querySelector('[data-search]');
 const cardsContainer = document.querySelector('[data-cards-container]');
 const cardTemplate = document.querySelector('[data-user-card-template]');
-const searchUrl = 'http://localhost:8080/search/';
-const avatarUrl = 'http://localhost:8080/image/avatar/';
-const profilePart = '/shrimp/';
+
+const localhostUrl = 'http://localhost:8080';
+const searchUrl = localhostUrl + '/search/';
+const avatarUrl = localhostUrl + '/image/avatar/';
+const profilePart = localhostUrl + '/shrimp/';
+
 var xhr = new XMLHttpRequest();
 xhr.responseType = 'json';
 
@@ -32,23 +35,21 @@ search.addEventListener("input", (e)=> {
 
 xhr.onload = function() {
     let response = xhr.response;
-    let startForm = document.forms.length;
+    let formCounter = document.forms.length;
 
     response.forEach(function(user) {
         const card = cardTemplate.content.cloneNode(true).children[0];
-        const form = card.querySelector('[data-card-form]');
         const photo = card.querySelector('[data-card-photo]');
         const nameSpan = card.querySelector('[data-card-username]');
         const dateSpan = card.querySelector('[data-card-date]');
 
-        var name = user.pfImgName === null ? '0' : user.pfImgName;
-        photo.src =  avatarUrl + name;
+        photo.src =  avatarUrl + user.pfImgName;
         nameSpan.textContent = user.uname;
-        dateSpan.textContent = 'Created: ' + user.created.substring(0, 10);
+        dateSpan.textContent = 'Created: ' + user.created;
 
         cardsContainer.append(card);
 
-        document.forms[startForm].action = profilePart + user.id;
-        startForm++;
+        document.forms[formCounter].action = profilePart + user.id;
+        formCounter++;
     });
 }
