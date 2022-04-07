@@ -113,7 +113,6 @@ public class ProfileResource {
             date = UploadTimeConverter.formatTimestamp(cs.getRegistrationDate());
         } else {
             cs.fillStaticInfo(md, userService, id);
-            md.addAttribute(PagesAttributes.ID_ATTR, id);
             date = UploadTimeConverter.formatTimestamp(userService.findRegistrationDate(id));
         }
 
@@ -121,6 +120,7 @@ public class ProfileResource {
         cs.setFollowButtonState(md, followService);
         cs.setChangeInfoButtonState(md);
 
+        md.addAttribute(PagesAttributes.OBSERVED_ID_ATTR, id);
         md.addAttribute(PagesAttributes.REGISTRATION_DATE_ATTR, date);
         md.addAttribute(PagesAttributes.FOLLOWS_ATTR, followService.findFollowsCountById(id));
         md.addAttribute(PagesAttributes.FOLLOWED_ATTR, followService.findFollowedCountById(id));

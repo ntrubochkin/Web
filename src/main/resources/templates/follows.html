@@ -76,10 +76,10 @@
                             </div>
                         </form>
                         <div class="pf-page-selection">
-                            <form th:action="@{/shrimp/} + ${stateId}" method="GET" class="pf-flex-form">
+                            <form th:action="@{/shrimp/} + ${stateObservedId}" method="GET" class="pf-flex-form">
                                 <button type="submit" class="page-selection-btn">Posts</button>
                             </form>
-                            <form th:action="@{/shrimp/} + ${stateId} + @{/follows}" method="GET" class="pf-flex-form">
+                            <form th:action="@{/shrimp/} + ${stateObservedId} + @{/follows}" method="GET" class="pf-flex-form">
                                 <button type="submit" class="page-selection-btn selected-page">Follows</button>
                             </form>
                         </div>

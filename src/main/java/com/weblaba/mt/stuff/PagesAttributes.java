@@ -2,6 +2,7 @@ package com.weblaba.mt.stuff;
 
 public final class PagesAttributes {
     public static final String ID_ATTR = "stateId";
+    public static final String OBSERVED_ID_ATTR = "stateObservedId";
     public static final String LOGGED_IN_ATTR = "loggedIn";
     public static final String NAME_ATTR = "stateName";
     public static final String INFO_ATTR = "stateInfo";
